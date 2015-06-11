@@ -59,6 +59,7 @@
     var dateTimePicker = function (element, options) {
         var picker = {},
             date = moment().startOf('d'),
+            dateBeforeShow,
             viewDate = date.clone(),
             unset = true,
             input,
@@ -438,11 +439,22 @@
                 });
             },
 
+            unchanged = function (e) {
+                return (e.date && e.oldDate && e.date.isSame(e.oldDate)) || (!e.date && !e.oldDate);
+            },
+
             notifyEvent = function (e) {
-                if (e.type === 'dp.change' && ((e.date && e.date.isSame(e.oldDate)) || (!e.date && !e.oldDate))) {
+                if (e.type === 'dp.change' && unchanged(e)) {
                     return;
                 }
                 element.trigger(e);
+            },
+
+            notifyChange = function (e) {
+                if (unchanged(e)) {
+                    return;
+                }
+                input.trigger('change', ['dp']);
             },
 
             viewUpdate = function (e) {
@@ -800,8 +812,10 @@
                 fillTime();
             },
 
-            setValue = function (targetMoment) {
-                var oldDate = unset ? null : date;
+            setValue = function (targetMoment, triggerChange, oldDate) {
+                if (oldDate === undefined) {
+                    oldDate = unset ? null : date;
+                }
 
                 // case of calling setValue(null or false)
                 if (!targetMoment) {
@@ -813,6 +827,12 @@
                         date: false,
                         oldDate: oldDate
                     });
+                    if (triggerChange) {
+                        notifyChange({
+                            date: false,
+                            oldDate: oldDate
+                        });
+                    }
                     update();
                     return;
                 }
@@ -835,6 +855,12 @@
                         date: date.clone(),
                         oldDate: oldDate
                     });
+                    if (triggerChange) {
+                        notifyChange({
+                            date: date.clone(),
+                            oldDate: oldDate
+                        });
+                    }
                 } else {
                     if (!options.keepInvalid) {
                         input.val(unset ? '' : date.format(actualFormat));
@@ -846,9 +872,15 @@
                 }
             },
 
-            hide = function () {
+            hideNoChange = function () {
+                hide(false);
+            },
+
+            hide = function (submit) {
                 ///<summary>Hides the widget. Possibly will emit dp.hide</summary>
-                var transitioning = false;
+                var transitioning = false,
+                    val,
+                    parsedDate;
                 if (!widget) {
                     return picker;
                 }
@@ -880,11 +912,16 @@
                     type: 'dp.hide',
                     date: date.clone()
                 });
+                if (submit !== false) {
+                    val = input.val().trim();
+                    parsedDate = val ? parseInputDate(val) : null;
+                    setValue(parsedDate, true, dateBeforeShow);
+                }
                 return picker;
             },
 
             clear = function () {
-                setValue(null);
+                setValue(null, true);
             },
 
             /********************************************************************************
@@ -1139,8 +1176,10 @@
                 if (input.prop('disabled') || (!options.ignoreReadonly && input.prop('readonly')) || widget) {
                     return picker;
                 }
+                dateBeforeShow = false;
                 if (input.val() !== undefined && input.val().trim().length !== 0) {
                     setValue(parseInputDate(input.val().trim()));
+                    dateBeforeShow = date.clone();
                 } else if (options.useCurrent && unset && ((input.is('input') && input.val().trim().length === 0) || options.inline)) {
                     currentMoment = moment();
                     if (typeof options.useCurrent === 'string') {
@@ -1209,7 +1248,8 @@
                     currentKey = e.which,
                     keyBindKeys,
                     allModifiersPressed,
-                    pressed = 'p';
+                    pressed = 'p',
+                    keyBinds;
 
                 keyState[currentKey] = pressed;
 
@@ -1222,8 +1262,14 @@
                     }
                 }
 
-                for (index in options.keyBinds) {
-                    if (options.keyBinds.hasOwnProperty(index) && typeof (options.keyBinds[index]) === 'function') {
+                if (!widget) {
+                    keyBinds = options.keyBindsClosed;
+                } else {
+                    keyBinds = options.keyBinds;
+                }
+
+                for (index in keyBinds) {
+                    if (keyBinds.hasOwnProperty(index) && typeof (keyBinds[index]) === 'function') {
                         keyBindKeys = index.split(' ');
                         if (keyBindKeys.length === pressedKeys.length && keyMap[currentKey] === keyBindKeys[keyBindKeys.length - 1]) {
                             allModifiersPressed = true;
@@ -1234,7 +1280,7 @@
                                 }
                             }
                             if (allModifiersPressed) {
-                                handler = options.keyBinds[index];
+                                handler = keyBinds[index];
                                 break;
                             }
                         }
@@ -1254,18 +1300,28 @@
                 e.preventDefault();
             },
 
-            change = function (e) {
+            change = function (e, param1) {
+                // skip if the change was triggered by us.
+                if (param1 && param1 === 'dp') {
+                    return;
+                }
                 var val = $(e.target).val().trim(),
-                    parsedDate = val ? parseInputDate(val) : null;
+                    parsedDate = val ? parseInputDate(val) : null,
+                    oldDate = unset ? null : date;
                 setValue(parsedDate);
-                e.stopImmediatePropagation();
-                return false;
+                if (unchanged({
+                    date: date,
+                    oldDate: oldDate
+                })) {
+                    e.stopImmediatePropagation();
+                    return false;
+                }
             },
 
             attachDatePickerElementEvents = function () {
                 input.on({
                     'change': change,
-                    'blur': options.debug ? '' : hide,
+                    'blur': options.debug ? '' : hideNoChange,
                     'keydown': keydown,
                     'keyup': keyup,
                     'focus': options.allowInputToggle ? show : ''
@@ -1284,10 +1340,10 @@
             detachDatePickerElementEvents = function () {
                 input.off({
                     'change': change,
-                    'blur': hide,
+                    'blur': hideNoChange,
                     'keydown': keydown,
                     'keyup': keyup,
-                    'focus': options.allowInputToggle ? hide : ''
+                    'focus': options.allowInputToggle ? show : ''
                 });
 
                 if (element.is('input')) {
@@ -2016,6 +2072,11 @@
             return picker;
         };
 
+        picker.keyBindsClosed = function (keyBindsClosed) {
+            options.keyBindsClosed = keyBindsClosed;
+            return picker;
+        };
+
         picker.debug = function (debug) {
             if (typeof debug !== 'boolean') {
                 throw new TypeError('debug() expects a boolean parameter');
@@ -2432,6 +2493,14 @@
             },
             'delete': function () {
                 this.clear();
+            }
+        },
+        keyBindsClosed: {
+            down: function (widget) {
+                if (!widget) {
+                    this.show();
+                    return;
+                }
             }
         },
         debug: false,
