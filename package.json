@@ -3,7 +3,7 @@
         "name": "Jonathan Peterson"
     },
     "bugs": {
-        "url": "https://github.com/eonasdan/bootstrap-datetimepicker/issues"
+        "url": "https://github.com/nkovacs/bootstrap-datetimepicker/issues"
     },
     "dependencies": {
         "moment": "~2.8.2",
@@ -36,7 +36,7 @@
     "name": "bootstrap-datetimepicker",
     "repository": {
         "type": "git",
-        "url": "https://github.com/eonasdan/bootstrap-datetimepicker.git"
+        "url": "https://github.com/nkovacs/bootstrap-datetimepicker.git"
     },
-    "version": "4.14.30"
+    "version": "5.0.0"
 }
