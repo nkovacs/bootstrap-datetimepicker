@@ -210,12 +210,12 @@
 
                 if (isEnabled('h')) {
                     topRow.append($('<td>')
-                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':'Increment Hour'}).addClass('btn').attr('data-action', 'incrementHours')
+                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':options.text.upHour}).addClass('btn').attr('data-action', 'incrementHours')
                             .append($('<span>').addClass(options.icons.up))));
                     middleRow.append($('<td>')
-                        .append($('<span>').addClass('timepicker-hour').attr({'data-time-component':'hours', 'title':'Pick Hour'}).attr('data-action', 'showHours')));
+                        .append($('<span>').addClass('timepicker-hour').attr({'data-time-component':'hours', 'title':options.text.pickHour}).attr('data-action', 'showHours')));
                     bottomRow.append($('<td>')
-                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':'Decrement Hour'}).addClass('btn').attr('data-action', 'decrementHours')
+                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':options.text.downHour}).addClass('btn').attr('data-action', 'decrementHours')
                             .append($('<span>').addClass(options.icons.down))));
                 }
                 if (isEnabled('m')) {
@@ -225,12 +225,12 @@
                         bottomRow.append($('<td>').addClass('separator'));
                     }
                     topRow.append($('<td>')
-                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':'Increment Minute'}).addClass('btn').attr('data-action', 'incrementMinutes')
+                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':options.text.upMinute}).addClass('btn').attr('data-action', 'incrementMinutes')
                             .append($('<span>').addClass(options.icons.up))));
                     middleRow.append($('<td>')
-                        .append($('<span>').addClass('timepicker-minute').attr({'data-time-component': 'minutes', 'title':'Pick Minute'}).attr('data-action', 'showMinutes')));
+                        .append($('<span>').addClass('timepicker-minute').attr({'data-time-component': 'minutes', 'title':options.text.pickMinute}).attr('data-action', 'showMinutes')));
                     bottomRow.append($('<td>')
-                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':'Decrement Minute'}).addClass('btn').attr('data-action', 'decrementMinutes')
+                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':options.text.downMinute}).addClass('btn').attr('data-action', 'decrementMinutes')
                             .append($('<span>').addClass(options.icons.down))));
                 }
                 if (isEnabled('s')) {
@@ -240,19 +240,19 @@
                         bottomRow.append($('<td>').addClass('separator'));
                     }
                     topRow.append($('<td>')
-                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':'Increment Second'}).addClass('btn').attr('data-action', 'incrementSeconds')
+                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':options.text.upSecond}).addClass('btn').attr('data-action', 'incrementSeconds')
                             .append($('<span>').addClass(options.icons.up))));
                     middleRow.append($('<td>')
-                        .append($('<span>').addClass('timepicker-second').attr({'data-time-component': 'seconds', 'title':'Pick Second'}).attr('data-action', 'showSeconds')));
+                        .append($('<span>').addClass('timepicker-second').attr({'data-time-component': 'seconds', 'title':options.text.pickSecond}).attr('data-action', 'showSeconds')));
                     bottomRow.append($('<td>')
-                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':'Decrement Second'}).addClass('btn').attr('data-action', 'decrementSeconds')
+                        .append($('<a>').attr({href: '#', tabindex: '-1', 'title':options.text.downSecond}).addClass('btn').attr('data-action', 'decrementSeconds')
                             .append($('<span>').addClass(options.icons.down))));
                 }
 
                 if (!use24Hours) {
                     topRow.append($('<td>').addClass('separator'));
                     middleRow.append($('<td>')
-                        .append($('<button>').addClass('btn btn-primary').attr({'data-action': 'togglePeriod', tabindex: '-1', 'title':'Toggle Period'})));
+                        .append($('<button>').addClass('btn btn-primary').attr({'data-action': 'togglePeriod', tabindex: '-1', 'title':options.text.togglePeriod})));
                     bottomRow.append($('<td>').addClass('separator'));
                 }
 
@@ -286,16 +286,16 @@
             getToolbar = function () {
                 var row = [];
                 if (options.showTodayButton) {
-                    row.push($('<td>').append($('<a>').attr({'data-action':'today', 'title':'Go to today'}).append($('<span>').addClass(options.icons.today))));
+                    row.push($('<td>').append($('<a>').attr({'data-action':'today', 'title':options.text.today}).append($('<span>').addClass(options.icons.today))));
                 }
                 if (!options.sideBySide && hasDate() && hasTime()) {
-                    row.push($('<td>').append($('<a>').attr({'data-action':'togglePicker', 'title':'Select Time'}).append($('<span>').addClass(options.icons.time))));
+                    row.push($('<td>').append($('<a>').attr({'data-action':'togglePicker', 'title':options.text.select}).append($('<span>').addClass(options.icons.time))));
                 }
                 if (options.showClear) {
-                    row.push($('<td>').append($('<a>').attr({'data-action':'clear', 'title':'Clear selection'}).append($('<span>').addClass(options.icons.clear))));
+                    row.push($('<td>').append($('<a>').attr({'data-action':'clear', 'title':options.text.clear}).append($('<span>').addClass(options.icons.clear))));
                 }
                 if (options.showClose) {
-                    row.push($('<td>').append($('<a>').attr({'data-action':'close', 'title':'Close the picker'}).append($('<span>').addClass(options.icons.close))));
+                    row.push($('<td>').append($('<a>').attr({'data-action':'close', 'title':options.text.close}).append($('<span>').addClass(options.icons.close))));
                 }
                 return $('<table>').addClass('table-condensed').append($('<tbody>').append($('<tr>').append(row)));
             },
@@ -564,9 +564,9 @@
                     monthsViewHeader = monthsView.find('th'),
                     months = monthsView.find('tbody').find('span');
 
-                monthsViewHeader.eq(0).find('span').attr('title', 'Previous Year');
-                monthsViewHeader.eq(1).attr('title', 'Select Year');
-                monthsViewHeader.eq(2).find('span').attr('title', 'Next Year');
+                monthsViewHeader.eq(0).find('span').attr('title', options.text.prevYear);
+                monthsViewHeader.eq(1).attr('title', options.text.selectYear);
+                monthsViewHeader.eq(2).find('span').attr('title', options.text.nextYear);
 
                 monthsView.find('.disabled').removeClass('disabled');
 
@@ -599,9 +599,9 @@
                     endYear = viewDate.clone().add(6, 'y'),
                     html = '';
 
-                yearsViewHeader.eq(0).find('span').attr('title', 'Previous Decade');
-                yearsViewHeader.eq(1).attr('title', 'Select Decade');
-                yearsViewHeader.eq(2).find('span').attr('title', 'Next Decade');
+                yearsViewHeader.eq(0).find('span').attr('title', options.text.prevDecade);
+                yearsViewHeader.eq(1).attr('title', options.text.selectDecade);
+                yearsViewHeader.eq(2).find('span').attr('title', options.text.nextDecade);
 
                 yearsView.find('.disabled').removeClass('disabled');
 
@@ -630,8 +630,8 @@
                     endDecade = startDecade.clone().add(100, 'y'),
                     html = '';
 
-                decadesViewHeader.eq(0).find('span').attr('title', 'Previous Century');
-                decadesViewHeader.eq(2).find('span').attr('title', 'Next Century');
+                decadesViewHeader.eq(0).find('span').attr('title', options.text.prevCentury);
+                decadesViewHeader.eq(2).find('span').attr('title', options.text.nextCentury);
 
                 decadesView.find('.disabled').removeClass('disabled');
 
@@ -668,9 +668,9 @@
                     return;
                 }
 
-                daysViewHeader.eq(0).find('span').attr('title', 'Previous Month');
-                daysViewHeader.eq(1).attr('title', 'Select Month');
-                daysViewHeader.eq(2).find('span').attr('title', 'Next Month');
+                daysViewHeader.eq(0).find('span').attr('title', options.text.prevMonth);
+                daysViewHeader.eq(1).attr('title', options.text.selectMonth);
+                daysViewHeader.eq(2).find('span').attr('title', options.text.nextMonth);
 
                 daysView.find('.disabled').removeClass('disabled');
                 daysViewHeader.eq(1).text(viewDate.format(options.dayViewHeaderFormat));
@@ -1854,6 +1854,22 @@
             return picker;
         };
 
+        picker.text = function (text) {
+            if (arguments.length === 0) {
+                return $.extend({}, options.text);
+            }
+
+            if (!(text instanceof Object)) {
+                throw new TypeError('text() expects parameter to be an Object');
+            }
+            $.extend(options.text, text);
+            if (widget) {
+                hide();
+                show();
+            }
+            return picker;
+        };
+
         picker.useStrict = function (useStrict) {
             if (arguments.length === 0) {
                 return options.useStrict;
@@ -2370,6 +2386,33 @@
             today: 'glyphicon glyphicon-screenshot',
             clear: 'glyphicon glyphicon-trash',
             close: 'glyphicon glyphicon-remove'
+        },
+        text: {
+            upHour: 'Increment hour',
+            pickHour: 'Pick hour',
+            downHour: 'Decrement hour',
+            upMinute: 'Increment minute',
+            pickMinute: 'Pick minute',
+            downMinute: 'Decrement minute',
+            upSecond: 'Increment second',
+            pickSecond: 'Pick second',
+            downSecond: 'Decrement second',
+            togglePeriod: 'Toggle period',
+            today: 'Go to today',
+            select: 'Select time',
+            clear: 'Clear selection',
+            close: 'Close the picker',
+            prevYear: 'Previous year',
+            selectYear: 'Select year',
+            nextYear: 'Next year',
+            prevDecade: 'Previous decade',
+            selectDecade: 'Select decade',
+            nextDecade: 'Next decade',
+            prevCentury: 'Previous century',
+            nextCentury: 'Next century',
+            prevMonth: 'Previous month',
+            selectMonth: 'Select month',
+            nextMonth: 'Next month'
         },
         useStrict: false,
         sideBySide: false,
