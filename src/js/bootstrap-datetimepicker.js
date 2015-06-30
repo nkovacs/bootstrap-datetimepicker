@@ -1309,6 +1309,7 @@
                     parsedDate = val ? parseInputDate(val) : null,
                     oldDate = unset ? null : date;
                 setValue(parsedDate);
+                dateBeforeShow = date;
                 if (unchanged({
                     date: date,
                     oldDate: oldDate
@@ -1321,7 +1322,7 @@
             attachDatePickerElementEvents = function () {
                 input.on({
                     'change': change,
-                    'blur': options.debug ? '' : hideNoChange,
+                    'blur': options.debug ? '' : hide,
                     'keydown': keydown,
                     'keyup': keyup,
                     'focus': options.allowInputToggle ? show : ''
@@ -1340,7 +1341,7 @@
             detachDatePickerElementEvents = function () {
                 input.off({
                     'change': change,
-                    'blur': hideNoChange,
+                    'blur': hide,
                     'keydown': keydown,
                     'keyup': keyup,
                     'focus': options.allowInputToggle ? show : ''
