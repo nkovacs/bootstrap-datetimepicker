@@ -7,32 +7,38 @@
   list-style: none;
 }
 @media (min-width: 768px) {
-  .bootstrap-datetimepicker-widget.timepicker-sbs.wider {
+  .bootstrap-datetimepicker-widget.timepicker-sbs.wider,
+  .bootstrap-datetimepicker-widget.timepicker-sbs.wider.dropdown-menu {
     width: 43em;
   }
 }
 @media (min-width: 992px) {
-  .bootstrap-datetimepicker-widget.timepicker-sbs.wider {
+  .bootstrap-datetimepicker-widget.timepicker-sbs.wider,
+  .bootstrap-datetimepicker-widget.timepicker-sbs.wider.dropdown-menu {
     width: 43em;
   }
 }
 @media (min-width: 1200px) {
-  .bootstrap-datetimepicker-widget.timepicker-sbs.wider {
+  .bootstrap-datetimepicker-widget.timepicker-sbs.wider,
+  .bootstrap-datetimepicker-widget.timepicker-sbs.wider.dropdown-menu {
     width: 43em;
   }
 }
 @media (min-width: 768px) {
-  .bootstrap-datetimepicker-widget.timepicker-sbs {
+  .bootstrap-datetimepicker-widget.timepicker-sbs,
+  .bootstrap-datetimepicker-widget.timepicker-sbs.dropdown-menu {
     width: 38em;
   }
 }
 @media (min-width: 992px) {
-  .bootstrap-datetimepicker-widget.timepicker-sbs {
+  .bootstrap-datetimepicker-widget.timepicker-sbs,
+  .bootstrap-datetimepicker-widget.timepicker-sbs.dropdown-menu {
     width: 38em;
   }
 }
 @media (min-width: 1200px) {
-  .bootstrap-datetimepicker-widget.timepicker-sbs {
+  .bootstrap-datetimepicker-widget.timepicker-sbs,
+  .bootstrap-datetimepicker-widget.timepicker-sbs.dropdown-menu {
     width: 38em;
   }
 }
