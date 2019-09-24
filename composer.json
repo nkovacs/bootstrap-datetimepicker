@@ -1,7 +1,7 @@
 {
   "name": "nkovacs/bootstrap-datetimepicker",
   "type": "component",
-  "version": "5.0.0",
+  "version": "5.0.5",
   "description": "Date/time picker widget based on twitter bootstrap",
   "keywords": [
     "bootstrap",

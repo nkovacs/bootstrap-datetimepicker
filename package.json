@@ -34,9 +34,9 @@
     "license": "MIT",
     "main": "src/js/bootstrap-datetimepicker.js",
     "name": "bootstrap-datetimepicker",
+    "version": "5.0.5",
     "repository": {
         "type": "git",
         "url": "https://github.com/nkovacs/bootstrap-datetimepicker.git"
-    },
-    "version": "5.0.0"
+    }
 }
