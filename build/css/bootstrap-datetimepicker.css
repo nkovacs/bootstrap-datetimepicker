@@ -43,6 +43,7 @@
   }
 }
 .bootstrap-datetimepicker-widget.dropdown-menu {
+  display: block;
   margin: 2px 0;
   padding: 4px;
   width: 19em;
@@ -293,7 +294,7 @@
   width: 54px;
 }
 .bootstrap-datetimepicker-widget table td.cw {
-  font-size: .8em;
+  font-size: 0.8em;
   height: 20px;
   line-height: 20px;
   color: #777777;
